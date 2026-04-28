@@ -43,8 +43,8 @@ export default function PannellumViewer() {
       const isMobile = window.innerWidth <= 768;
       
       const selectedPanorama = isMobile 
-        ? '/image/Executive Double Final-4096x2048.jpg'    // รูปที่ Resize (4096px) สำหรับมือถือ
-        : '/image/Executive Double Final.jpg'; // รูปต้นฉบับ (16K) สำหรับคอม
+        ? '/image/Executive-Double-Final-4096x2048.jpg'    // รูปที่ Resize (4096px) สำหรับมือถือ
+        : '/image/Executive-Double-Final.jpg'; // รูปต้นฉบับ (16K) สำหรับคอม
 
       viewerRef.current = window.pannellum.viewer('panorama-container', {
         type: 'equirectangular',
