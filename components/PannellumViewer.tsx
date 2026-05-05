@@ -34,13 +34,12 @@ export default function PannellumViewer() {
     }
 
     function initViewer() {
-      // ล้างหน่วยความจำเก่าทิ้งก่อน (สำคัญมากสำหรับ iPad/มือถือ)
+      // ล้างหน่วยความจำเก่าทิ้งก่อน
       if (viewerRef.current) {
         viewerRef.current.destroy();
       }
 
       // เช็คว่าเป็นมือถือหรือแท็บเล็ต (iPad) หรือไม่ 
-      // ปรับเป็น 1180 เพื่อให้ iPad โหลดรูปเล็กด้วย จะได้ไม่จอดำ
       const isMobileOrTablet = window.innerWidth <= 1180;
       
       // เลือกใช้รูปตามขนาดหน้าจอ
@@ -85,12 +84,11 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* 1. รูป 360 องศา (ซ้ายล่าง) - คลิกเพื่อแพนกล้องได้ */}
+      {/* 1. รูป 360 องศา (ซ้ายล่าง) - ตัดพื้นหลังออกแล้ว + เพิ่มขนาด */}
       {/* ========================================================= */}
       <div 
         className="absolute bottom-8 left-8 z-10 cursor-pointer group"
         onClick={() => {
-          // สั่งให้กล้องหมุนขวา 30 องศาเมื่อคลิกที่ไอคอน 360
           if (viewerRef.current) {
             viewerRef.current.setYaw(viewerRef.current.getYaw() + 30, true);
           }
@@ -99,13 +97,16 @@ export default function PannellumViewer() {
         <img 
           src="/image/360-icon.png" 
           alt="360 View" 
-          /* เพิ่ม invert เพื่อเปลี่ยนรูปสีดำให้เป็นสีขาว จะได้ตัดกับพื้นหลัง */
-          className="h-16 md:h-20 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-xl invert"
+          /* 
+            - mix-blend-screen จะทำให้พื้นหลังสีดำทะลุจนโปร่งใส 
+            - h-20 md:h-24 ปรับขนาดให้ใหญ่ขึ้นกำลังดี
+          */
+          className="h-20 md:h-24 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-xl invert mix-blend-screen"
         />
       </div>
 
       {/* ========================================================= */}
-      {/* 2. โลโก้ CenIVP (ขวาล่าง) - ปรับขนาดให้ใหญ่ขึ้นนิดนึง (h-16 ถึง h-20) */}
+      {/* 2. โลโก้ CenIVP (ขวาล่าง) */}
       {/* ========================================================= */}
       <div className="absolute bottom-8 right-8 z-10 pointer-events-none">
         <img 
