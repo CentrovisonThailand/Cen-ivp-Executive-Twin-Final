@@ -55,7 +55,7 @@ export default function PannellumViewer() {
         autoRotate: -2,
         orientationOnDeviceMotion: true, // เอียงเครื่องหมุนตาม (สำหรับมือถือ/iPad)
         backgroundColor: [0.1, 0.1, 0.1],
-        showControls: false, // ปิดปุ่มควบคุมเดิมของ Pannellum (ถ้าต้องการเปิดให้แก้เป็น true)
+        showControls: false, // ปิดปุ่มควบคุมเดิมของ Pannellum
       });
     }
 
@@ -94,7 +94,7 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* แก้ไขใหม่: โลโก้ CenIVP ซ้ายล่าง (มีอนิเมชั่น 360 และคลิกเพื่อแพนกล้อง) */}
+      {/* โลโก้ CenIVP ซ้ายล่าง (มีอนิเมชั่น 360 และคลิกเพื่อแพนกล้อง) */}
       {/* ========================================================= */}
       <div 
         className="absolute bottom-8 left-8 z-10 text-white flex items-center gap-3 cursor-pointer group bg-black/30 p-3 rounded-2xl backdrop-blur-sm transition-colors hover:bg-black/50"
@@ -117,16 +117,16 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* เพิ่มใหม่: ปุ่ม BOOK NOW ตรงกลางด้านล่าง */}
+      {/* ปุ่ม BOOK NOW ตรงกลางด้านล่าง (เอาอีโมจิออกแล้ว) */}
       {/* ========================================================= */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <a 
           href="https://reservation.gbibangkok.com/ibe/b/Grand-Business-Inn#/room/05%20May%2026/06%20May%2026" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:scale-110 hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all duration-300 flex items-center gap-2"
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:scale-110 hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all duration-300 block text-center"
         >
-          <span className="animate-pulse">🛎️</span> BOOK NOW
+          BOOK NOW
         </a>
       </div>
 
