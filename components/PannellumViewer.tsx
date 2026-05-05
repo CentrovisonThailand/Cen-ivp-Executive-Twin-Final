@@ -34,7 +34,7 @@ export default function PannellumViewer() {
     }
 
     function initViewer() {
-      // ล้างหน่วยความจำเก่าทิ้งก่อน
+      // ล้างหน่วยความจำเก่าทิ้งก่อน (สำคัญมากสำหรับ iPad/มือถือ)
       if (viewerRef.current) {
         viewerRef.current.destroy();
       }
@@ -54,7 +54,7 @@ export default function PannellumViewer() {
         autoRotate: -2,
         orientationOnDeviceMotion: true, 
         backgroundColor: [0.1, 0.1, 0.1],
-        showControls: false, 
+        showControls: true, // <--- แก้ตรงนี้เป็น true เพื่อเปิดปุ่ม +, -, และเต็มจอ
       });
     }
 
@@ -84,11 +84,12 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* 1. รูป 360 องศา (ซ้ายล่าง) - ตัดพื้นหลังออกแล้ว + เพิ่มขนาด */}
+      {/* 1. รูป 360 องศา (ซ้าย) - ลบกรอบดำทิ้ง ปรับขนาด และขยับขึ้นไม่ให้ทับปุ่มซูม */}
       {/* ========================================================= */}
       <div 
-        className="absolute bottom-8 left-8 z-10 cursor-pointer group"
+        className="absolute bottom-28 left-6 z-10 cursor-pointer group"
         onClick={() => {
+          // สั่งให้กล้องหมุนขวา 30 องศาเมื่อคลิก
           if (viewerRef.current) {
             viewerRef.current.setYaw(viewerRef.current.getYaw() + 30, true);
           }
@@ -97,11 +98,8 @@ export default function PannellumViewer() {
         <img 
           src="/image/360-icon.png" 
           alt="360 View" 
-          /* 
-            - mix-blend-screen จะทำให้พื้นหลังสีดำทะลุจนโปร่งใส 
-            - h-20 md:h-24 ปรับขนาดให้ใหญ่ขึ้นกำลังดี
-          */
-          className="h-20 md:h-24 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-xl invert mix-blend-screen"
+          /* ลบ bg-black ออกไปแล้ว รูปจะโปร่งใสสวยงาม และปรับขนาดเป็น h-14 กำลังดี */
+          className="h-14 md:h-16 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-md invert"
         />
       </div>
 
