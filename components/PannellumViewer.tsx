@@ -55,6 +55,7 @@ export default function PannellumViewer() {
         autoRotate: -2,
         orientationOnDeviceMotion: true, // เอียงเครื่องหมุนตาม (สำหรับมือถือ/iPad)
         backgroundColor: [0.1, 0.1, 0.1],
+        showControls: false, // ปิดปุ่มควบคุมเดิมของ Pannellum (ถ้าต้องการเปิดให้แก้เป็น true)
       });
     }
 
@@ -70,8 +71,8 @@ export default function PannellumViewer() {
     <div className="relative w-full h-screen overflow-hidden">
       <div id="panorama-container" className="w-full h-full bg-slate-900" />
       
-      {/* ส่วนแสดงยอดวิว */}
-      <div className="absolute top-8 right-8 z-10 bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-white/20 text-white shadow-2xl">
+      {/* ส่วนแสดงยอดวิว (โค้ดเดิม) */}
+      <div className="absolute top-8 right-8 z-10 bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-white/20 text-white shadow-2xl pointer-events-none">
         <div className="flex flex-col items-end">
           <span className="text-[10px] uppercase tracking-[0.3em] text-cyan-400 font-bold mb-1">Live Analytics</span>
           <div className="flex items-baseline gap-2">
@@ -83,8 +84,8 @@ export default function PannellumViewer() {
         </div>
       </div>
 
-      {/* โลโก้ CenIVP */}
-      <div className="absolute bottom-8 right-8 z-10">
+      {/* โลโก้ขวาล่าง (โค้ดเดิม) */}
+      <div className="absolute bottom-8 right-8 z-10 pointer-events-none">
         <img 
           src="/image/cenivp.png" 
           alt="Cenivp" 
@@ -92,12 +93,43 @@ export default function PannellumViewer() {
         />
       </div>
 
-      <div className="absolute bottom-8 left-8 z-10 text-white">
-        <h1 className="text-2xl font-bold tracking-wider">
+      {/* ========================================================= */}
+      {/* แก้ไขใหม่: โลโก้ CenIVP ซ้ายล่าง (มีอนิเมชั่น 360 และคลิกเพื่อแพนกล้อง) */}
+      {/* ========================================================= */}
+      <div 
+        className="absolute bottom-8 left-8 z-10 text-white flex items-center gap-3 cursor-pointer group bg-black/30 p-3 rounded-2xl backdrop-blur-sm transition-colors hover:bg-black/50"
+        onClick={() => {
+          // ฟังก์ชันสั่งให้กล้อง 360 หมุนไปทางขวา 30 องศาแบบนุ่มนวล
+          if (viewerRef.current) {
+            viewerRef.current.setYaw(viewerRef.current.getYaw() + 30, true);
+          }
+        }}
+      >
+        <div className="relative w-12 h-12 flex items-center justify-center">
+          {/* วงแหวนหมุน */}
+          <div className="absolute w-full h-full border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-[10px] font-bold text-cyan-400">360°</span>
+        </div>
+        <h1 className="text-2xl font-bold tracking-wider group-hover:scale-105 transition-transform duration-300">
           <span className="text-cyan-400">Cen</span>
           <span className="text-white">IVP</span>
         </h1>
       </div>
+
+      {/* ========================================================= */}
+      {/* เพิ่มใหม่: ปุ่ม BOOK NOW ตรงกลางด้านล่าง */}
+      {/* ========================================================= */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <a 
+          href="https://reservation.gbibangkok.com/ibe/b/Grand-Business-Inn#/room/05%20May%2026/06%20May%2026" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:scale-110 hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all duration-300 flex items-center gap-2"
+        >
+          <span className="animate-pulse">🛎️</span> BOOK NOW
+        </a>
+      </div>
+
     </div>
   );
 }
