@@ -84,10 +84,11 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* 1. รูป 360 องศา (ซ้าย) - ปรับขนาดให้ใหญ่ขึ้นอย่างเหมาะสม */}
+      {/* 1. รูป 360 องศา (ซ้ายล่าง) - ขยับลงล่างสุด และเพิ่มขนาดให้ใหญ่ขึ้นอีก */}
       {/* ========================================================= */}
       <div 
-        className="absolute bottom-24 left-6 z-10 cursor-pointer group"
+        /* ขยับลงมาที่ bottom-8 ระดับเดียวกับปุ่มอื่นๆ และเว้น left-20 ถึง 24 เพื่อหลบปุ่มซูม */
+        className="absolute bottom-8 left-20 md:left-24 z-10 cursor-pointer group"
         onClick={() => {
           // สั่งให้กล้องหมุนขวา 30 องศาเมื่อคลิก
           if (viewerRef.current) {
@@ -98,8 +99,8 @@ export default function PannellumViewer() {
         <img 
           src="/image/360-icon.png" 
           alt="360 View" 
-          /* ปรับความสูงเป็น h-24 สำหรับมือถือ และ h-28 สำหรับจอคอม (ใหญ่ขึ้นชัดเจน) */
-          className="h-24 md:h-28 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-md invert"
+          /* เพิ่มขนาดความสูงเป็น h-32 (มือถือ) และ h-40 (คอม) ให้ใหญ่ชัดเจน */
+          className="h-32 md:h-40 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 drop-shadow-md invert"
         />
       </div>
 
