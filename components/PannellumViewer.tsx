@@ -43,23 +43,23 @@ export default function PannellumViewer() {
       // ปรับเป็น 1180 เพื่อให้ iPad โหลดรูปเล็กด้วย จะได้ไม่จอดำ
       const isMobileOrTablet = window.innerWidth <= 1180;
       
-      // เลือกใช้รูปตามขนาดหน้าจอ (สะกดชื่อไฟล์ให้ตรงกับใน GitHub เป๊ะๆ)
+      // เลือกใช้รูปตามขนาดหน้าจอ
       const selectedPanorama = isMobileOrTablet 
-        ? '/image/Executive-Double-Final-4096x2048.jpg' // รูป 4K (สำหรับมือถือ/iPad)
-        : '/image/Executive-Double-Final.jpg';          // รูป 16K (สำหรับคอมพิวเตอร์)
+        ? '/image/Executive-Double-Final-4096x2048.jpg' 
+        : '/image/Executive-Double-Final.jpg';          
 
       viewerRef.current = window.pannellum.viewer('panorama-container', {
         type: 'equirectangular',
         panorama: selectedPanorama,
         autoLoad: true,
         autoRotate: -2,
-        orientationOnDeviceMotion: true, // เอียงเครื่องหมุนตาม (สำหรับมือถือ/iPad)
+        orientationOnDeviceMotion: true, 
         backgroundColor: [0.1, 0.1, 0.1],
-        showControls: false, // ปิดปุ่มควบคุมเดิมของ Pannellum
+        showControls: false, 
       });
     }
 
-    // ทำลาย viewer เมื่อออกจากหน้าเว็บเพื่อคืนค่า RAM
+    // ทำลาย viewer เมื่อออกจากหน้าเว็บ
     return () => {
       if (viewerRef.current) {
         viewerRef.current.destroy();
@@ -71,7 +71,7 @@ export default function PannellumViewer() {
     <div className="relative w-full h-screen overflow-hidden">
       <div id="panorama-container" className="w-full h-full bg-slate-900" />
       
-      {/* ส่วนแสดงยอดวิว (โค้ดเดิม) */}
+      {/* ส่วนแสดงยอดวิว (ขวาบน) */}
       <div className="absolute top-8 right-8 z-10 bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-white/20 text-white shadow-2xl pointer-events-none">
         <div className="flex flex-col items-end">
           <span className="text-[10px] uppercase tracking-[0.3em] text-cyan-400 font-bold mb-1">Live Analytics</span>
@@ -85,37 +85,38 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* โลโก้ขวาล่าง (ถ้าคุณใช้รูปเดียวกันซ้ายขวา สามารถลบส่วนนี้ทิ้งได้ครับ แต่ผมคงไว้ให้ก่อนเผื่อต้องการใช้) */}
-      {/* ========================================================= */}
-      <div className="absolute bottom-8 right-8 z-10 pointer-events-none">
-        <img 
-          src="/image/cenivp.png" 
-          alt="Cenivp" 
-          className="h-12 opacity-90 hover:opacity-100 transition-opacity"
-        />
-      </div>
-
-      {/* ========================================================= */}
-      {/* แก้ไข: โลโก้ CenIVP 360 ซ้ายล่าง (ใช้รูปภาพใหญ่ขึ้นและคลิกเพื่อแพนกล้อง) */}
+      {/* 1. รูป 360 องศา (ซ้ายล่าง) - คลิกเพื่อแพนกล้องได้ */}
       {/* ========================================================= */}
       <div 
         className="absolute bottom-8 left-8 z-10 cursor-pointer group"
         onClick={() => {
-          // ฟังก์ชันสั่งให้กล้อง 360 หมุนไปทางขวา 30 องศาแบบนุ่มนวล
+          // สั่งให้กล้องหมุนขวา 30 องศาเมื่อคลิกที่ไอคอน 360
           if (viewerRef.current) {
             viewerRef.current.setYaw(viewerRef.current.getYaw() + 30, true);
           }
         }}
       >
         <img 
-          src="/image/cenivp.png" 
-          alt="CenIVP Interactive 360" 
-          className="h-24 md:h-32 w-auto object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 drop-shadow-xl"
+          src="/image/360-icon.png" 
+          alt="360 View" 
+          /* เพิ่ม invert เพื่อเปลี่ยนรูปสีดำให้เป็นสีขาว จะได้ตัดกับพื้นหลัง */
+          className="h-16 md:h-20 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-xl invert"
         />
       </div>
 
       {/* ========================================================= */}
-      {/* ปุ่ม BOOK NOW ตรงกลางด้านล่าง */}
+      {/* 2. โลโก้ CenIVP (ขวาล่าง) - ปรับขนาดให้ใหญ่ขึ้นนิดนึง (h-16 ถึง h-20) */}
+      {/* ========================================================= */}
+      <div className="absolute bottom-8 right-8 z-10 pointer-events-none">
+        <img 
+          src="/image/cenivp.png" 
+          alt="Cenivp" 
+          className="h-16 md:h-20 w-auto object-contain opacity-90 drop-shadow-lg"
+        />
+      </div>
+
+      {/* ========================================================= */}
+      {/* 3. ปุ่ม BOOK NOW (ตรงกลางด้านล่าง) */}
       {/* ========================================================= */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <a 
