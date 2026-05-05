@@ -84,7 +84,9 @@ export default function PannellumViewer() {
         </div>
       </div>
 
-      {/* โลโก้ขวาล่าง (โค้ดเดิม) */}
+      {/* ========================================================= */}
+      {/* โลโก้ขวาล่าง (ถ้าคุณใช้รูปเดียวกันซ้ายขวา สามารถลบส่วนนี้ทิ้งได้ครับ แต่ผมคงไว้ให้ก่อนเผื่อต้องการใช้) */}
+      {/* ========================================================= */}
       <div className="absolute bottom-8 right-8 z-10 pointer-events-none">
         <img 
           src="/image/cenivp.png" 
@@ -94,10 +96,10 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* โลโก้ CenIVP ซ้ายล่าง (มีอนิเมชั่น 360 และคลิกเพื่อแพนกล้อง) */}
+      {/* แก้ไข: โลโก้ CenIVP 360 ซ้ายล่าง (ใช้รูปภาพใหญ่ขึ้นและคลิกเพื่อแพนกล้อง) */}
       {/* ========================================================= */}
       <div 
-        className="absolute bottom-8 left-8 z-10 text-white flex items-center gap-3 cursor-pointer group bg-black/30 p-3 rounded-2xl backdrop-blur-sm transition-colors hover:bg-black/50"
+        className="absolute bottom-8 left-8 z-10 cursor-pointer group"
         onClick={() => {
           // ฟังก์ชันสั่งให้กล้อง 360 หมุนไปทางขวา 30 องศาแบบนุ่มนวล
           if (viewerRef.current) {
@@ -105,26 +107,22 @@ export default function PannellumViewer() {
           }
         }}
       >
-        <div className="relative w-12 h-12 flex items-center justify-center">
-          {/* วงแหวนหมุน */}
-          <div className="absolute w-full h-full border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-[10px] font-bold text-cyan-400">360°</span>
-        </div>
-        <h1 className="text-2xl font-bold tracking-wider group-hover:scale-105 transition-transform duration-300">
-          <span className="text-cyan-400">Cen</span>
-          <span className="text-white">IVP</span>
-        </h1>
+        <img 
+          src="/image/cenivp.png" 
+          alt="CenIVP Interactive 360" 
+          className="h-24 md:h-32 w-auto object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 drop-shadow-xl"
+        />
       </div>
 
       {/* ========================================================= */}
-      {/* ปุ่ม BOOK NOW ตรงกลางด้านล่าง (เอาอีโมจิออกแล้ว) */}
+      {/* ปุ่ม BOOK NOW ตรงกลางด้านล่าง */}
       {/* ========================================================= */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <a 
           href="https://reservation.gbibangkok.com/ibe/b/Grand-Business-Inn#/room/05%20May%2026/06%20May%2026" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:scale-110 hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all duration-300 block text-center"
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:scale-110 hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all duration-300 block text-center tracking-wider"
         >
           BOOK NOW
         </a>
