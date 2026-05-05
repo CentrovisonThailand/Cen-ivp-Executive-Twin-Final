@@ -40,26 +40,25 @@ export default function PannellumViewer() {
       }
 
       // เช็คว่าเป็นมือถือหรือแท็บเล็ต (iPad) หรือไม่ 
-      // ปรับเป็น 1180 เพื่อให้ iPad โหลดรูปเล็กด้วย จะได้ไม่จอดำ
       const isMobileOrTablet = window.innerWidth <= 1180;
       
-      // เลือกใช้รูปตามขนาดหน้าจอ (สะกดชื่อไฟล์ให้ตรงกับใน GitHub เป๊ะๆ)
+      // เลือกใช้รูปตามขนาดหน้าจอ
       const selectedPanorama = isMobileOrTablet 
-        ? '/image/Executive-Double-Final-4096x2048.jpg' // รูป 4K (สำหรับมือถือ/iPad)
-        : '/image/Executive-Double-Final.jpg';          // รูป 16K (สำหรับคอมพิวเตอร์)
+        ? '/image/Executive-Double-Final-4096x2048.jpg' 
+        : '/image/Executive-Double-Final.jpg';          
 
       viewerRef.current = window.pannellum.viewer('panorama-container', {
         type: 'equirectangular',
         panorama: selectedPanorama,
         autoLoad: true,
         autoRotate: -2,
-        orientationOnDeviceMotion: true, // เอียงเครื่องหมุนตาม (สำหรับมือถือ/iPad)
+        orientationOnDeviceMotion: true, 
         backgroundColor: [0.1, 0.1, 0.1],
-        showControls: false, // ปิดปุ่มควบคุมเดิมของ Pannellum (ถ้าต้องการเปิดให้แก้เป็น true)
+        showControls: true, // <--- แก้ตรงนี้เป็น true เพื่อเปิดปุ่ม +, -, และเต็มจอ
       });
     }
 
-    // ทำลาย viewer เมื่อออกจากหน้าเว็บเพื่อคืนค่า RAM
+    // ทำลาย viewer เมื่อออกจากหน้าเว็บ
     return () => {
       if (viewerRef.current) {
         viewerRef.current.destroy();
@@ -71,7 +70,7 @@ export default function PannellumViewer() {
     <div className="relative w-full h-screen overflow-hidden">
       <div id="panorama-container" className="w-full h-full bg-slate-900" />
       
-      {/* ส่วนแสดงยอดวิว (โค้ดเดิม) */}
+      {/* ส่วนแสดงยอดวิว (ขวาบน) */}
       <div className="absolute top-8 right-8 z-10 bg-black/40 backdrop-blur-xl p-6 rounded-2xl border border-white/20 text-white shadow-2xl pointer-events-none">
         <div className="flex flex-col items-end">
           <span className="text-[10px] uppercase tracking-[0.3em] text-cyan-400 font-bold mb-1">Live Analytics</span>
@@ -84,49 +83,48 @@ export default function PannellumViewer() {
         </div>
       </div>
 
-      {/* โลโก้ขวาล่าง (โค้ดเดิม) */}
-      <div className="absolute bottom-8 right-8 z-10 pointer-events-none">
-        <img 
-          src="/image/cenivp.png" 
-          alt="Cenivp" 
-          className="h-12 opacity-90 hover:opacity-100 transition-opacity"
-        />
-      </div>
-
       {/* ========================================================= */}
-      {/* แก้ไขใหม่: โลโก้ CenIVP ซ้ายล่าง (มีอนิเมชั่น 360 และคลิกเพื่อแพนกล้อง) */}
+      {/* 1. รูป 360 องศา (ซ้าย) - ลบกรอบดำทิ้ง ปรับขนาด และขยับขึ้นไม่ให้ทับปุ่มซูม */}
       {/* ========================================================= */}
       <div 
-        className="absolute bottom-8 left-8 z-10 text-white flex items-center gap-3 cursor-pointer group bg-black/30 p-3 rounded-2xl backdrop-blur-sm transition-colors hover:bg-black/50"
+        className="absolute bottom-28 left-6 z-10 cursor-pointer group"
         onClick={() => {
-          // ฟังก์ชันสั่งให้กล้อง 360 หมุนไปทางขวา 30 องศาแบบนุ่มนวล
+          // สั่งให้กล้องหมุนขวา 30 องศาเมื่อคลิก
           if (viewerRef.current) {
             viewerRef.current.setYaw(viewerRef.current.getYaw() + 30, true);
           }
         }}
       >
-        <div className="relative w-12 h-12 flex items-center justify-center">
-          {/* วงแหวนหมุน */}
-          <div className="absolute w-full h-full border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-[10px] font-bold text-cyan-400">360°</span>
-        </div>
-        <h1 className="text-2xl font-bold tracking-wider group-hover:scale-105 transition-transform duration-300">
-          <span className="text-cyan-400">Cen</span>
-          <span className="text-white">IVP</span>
-        </h1>
+        <img 
+          src="/image/360-icon.png" 
+          alt="360 View" 
+          /* ลบ bg-black ออกไปแล้ว รูปจะโปร่งใสสวยงาม และปรับขนาดเป็น h-14 กำลังดี */
+          className="h-14 md:h-16 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 drop-shadow-md invert"
+        />
       </div>
 
       {/* ========================================================= */}
-      {/* เพิ่มใหม่: ปุ่ม BOOK NOW ตรงกลางด้านล่าง */}
+      {/* 2. โลโก้ CenIVP (ขวาล่าง) */}
+      {/* ========================================================= */}
+      <div className="absolute bottom-8 right-8 z-10 pointer-events-none">
+        <img 
+          src="/image/cenivp.png" 
+          alt="Cenivp" 
+          className="h-16 md:h-20 w-auto object-contain opacity-90 drop-shadow-lg"
+        />
+      </div>
+
+      {/* ========================================================= */}
+      {/* 3. ปุ่ม BOOK NOW (ตรงกลางด้านล่าง) */}
       {/* ========================================================= */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <a 
           href="https://reservation.gbibangkok.com/ibe/b/Grand-Business-Inn#/room/05%20May%2026/06%20May%2026" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:scale-110 hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all duration-300 flex items-center gap-2"
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.6)] hover:scale-110 hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] transition-all duration-300 block text-center tracking-wider"
         >
-          <span className="animate-pulse">🛎️</span> BOOK NOW
+          BOOK NOW
         </a>
       </div>
 
