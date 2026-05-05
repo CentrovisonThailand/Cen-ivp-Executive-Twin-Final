@@ -68,6 +68,16 @@ export default function PannellumViewer() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
+      {/* 
+        เพิ่ม CSS พิเศษเพื่อดันปุ่มควบคุมของ Pannellum (+, -, เต็มจอ) ขึ้นไปด้านบน 
+        เพื่อไม่ให้มันมาบังโลโก้ 360 องศาที่มุมซ้ายล่าง 
+      */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .pnlm-controls-container {
+          bottom: 150px !important;
+        }
+      `}} />
+
       <div id="panorama-container" className="w-full h-full bg-slate-900" />
       
       {/* ส่วนแสดงยอดวิว (ขวาบน) */}
@@ -84,13 +94,12 @@ export default function PannellumViewer() {
       </div>
 
       {/* ========================================================= */}
-      {/* 1. รูป 360 องศา (ซ้ายล่าง) - ขยับลงล่างสุด และเพิ่มขนาดให้ใหญ่ขึ้นอีก */}
+      {/* 1. รูป 360 องศา (ซ้ายล่าง) - เข้ามุมแบบสมมาตร */}
       {/* ========================================================= */}
       <div 
-        /* ขยับลงมาที่ bottom-8 ระดับเดียวกับปุ่มอื่นๆ และเว้น left-20 ถึง 24 เพื่อหลบปุ่มซูม */
-        className="absolute bottom-8 left-20 md:left-24 z-10 cursor-pointer group"
+        /* เปลี่ยนเป็น bottom-8 left-8 เพื่อให้อยู่มุมสุดเหมือนโลโก้ขวาล่าง */
+        className="absolute bottom-8 left-8 z-10 cursor-pointer group"
         onClick={() => {
-          // สั่งให้กล้องหมุนขวา 30 องศาเมื่อคลิก
           if (viewerRef.current) {
             viewerRef.current.setYaw(viewerRef.current.getYaw() + 30, true);
           }
@@ -99,8 +108,8 @@ export default function PannellumViewer() {
         <img 
           src="/image/360-icon.png" 
           alt="360 View" 
-          /* เพิ่มขนาดความสูงเป็น h-32 (มือถือ) และ h-40 (คอม) ให้ใหญ่ชัดเจน */
-          className="h-32 md:h-40 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 drop-shadow-md invert"
+          /* ปรับให้ใหญ่ขึ้นตามต้องการ h-24 สำหรับมือถือ และ h-32 สำหรับจอคอม */
+          className="h-24 md:h-32 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 drop-shadow-md invert"
         />
       </div>
 
